@@ -26,7 +26,7 @@ public static void selectLocation(WebDriver driver, String locationSelected)
 	driver.switchTo().defaultContent();
 }
 
-public static void selectMajors(WebDriver driver, String majorType, String majorName)
+public static void selectMajors(WebDriver driver, String majorType, String majorName) throws InterruptedException
 {
 	driver.switchTo().defaultContent(); // outside both frames
 	driver.switchTo().frame("supermatch");
@@ -40,7 +40,7 @@ public static void selectMajors(WebDriver driver, String majorType, String major
 	careerText.sendKeys(Keys.RETURN);
 	careerText.sendKeys(majorName);
 	careerText.sendKeys(Keys.ENTER);
-	//driver.findElement(By.xpath("//div[@id='matchingMajors']/span[0]")).click();
+	Thread.sleep(5);
 	driver.findElement(By.xpath("//span[contains(text(),'" + majorType + "')]")).click();
 	driver.findElement(By.className("matchingSection"));
 	System.out.println("***CHECK SEARCH IS LOADED FOR " + majorName);
@@ -54,7 +54,7 @@ public static void verifySearchResult100Percent(WebDriver driver, String keyFoun
 	System.out.println("CHECK IF UNIVERSITY '" + keyFound + "' IS A 100% MATCH");
 	WebElement UniversityFound = null;
 	try {
-		UniversityFound = driver.findElement(By.xpath("//div[@class='matchingSection']/div[contains(text(), '" + keyFound + "')]"));
+		UniversityFound = driver.findElement(By.xpath("//div[contains(text(), '" + keyFound + "')]"));
 	   keyPresent = true;
 	} catch (NoSuchElementException e) {
 	   keyPresent = false;
@@ -67,13 +67,9 @@ public static void verifySearchResult100Percent(WebDriver driver, String keyFoun
 			hundredPresent = true;
 		} catch (NoSuchElementException e) {
 			hundredPresent = false;
+			System.out.println("KEY UNIVERSITY IS NOT A 100% MATCH");
 		}
 	}
-	else
-	{
-		System.out.println("KEY UNIVERSITY IS NOT A 100% MATCH");
-	}
-
 }
 
 public static WebElement lnk_MyAccount(WebDriver driver){
