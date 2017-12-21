@@ -50,21 +50,31 @@ public static void verifySearchResult100Percent(WebDriver driver, String keyFoun
 {
 	driver.switchTo().defaultContent(); // outside both frames
 	driver.switchTo().frame("supermatch");
-	boolean present;
+	boolean keyPresent, hundredPresent;
+	System.out.println("CHECK IF UNIVERSITY '" + keyFound + "' IS A 100% MATCH");
+	WebElement UniversityFound = null;
 	try {
-		driver.findElement(By.xpath("//div[@class='matchingSection']/div[contains(text(), '" + keyFound + "')]"));
-	   present = true;
+		UniversityFound = driver.findElement(By.xpath("//div[@class='matchingSection']/div[contains(text(), '" + keyFound + "')]"));
+	   keyPresent = true;
 	} catch (NoSuchElementException e) {
-	   present = false;
+	   keyPresent = false;
+	   System.out.println("KEY UNIVERSITY WAS NOT FOUND: " + keyFound);
+	}
+	if(keyPresent)
+	{
+		try {
+			UniversityFound.findElement(By.xpath("//div[@class='percentMatch' and contains(text(), '100%')"));
+			hundredPresent = true;
+		} catch (NoSuchElementException e) {
+			hundredPresent = false;
+		}
+	}
+	else
+	{
+		System.out.println("KEY UNIVERSITY IS NOT A 100% MATCH");
 	}
 
-
-//paso 7.2: WebElement UniversityFound = driver.findElement(By.Xpath(//div[@class="matchingSection"]/div[contains(text(), "Miami University-Oxford")]));
-
-//WebElement UniversityFound = wrap.findElement(By.xpath("//div[@class='percentMatch' and contains(text(), '100%')"));
-	 
-	
-	}
+}
 
 public static WebElement lnk_MyAccount(WebDriver driver){
 
